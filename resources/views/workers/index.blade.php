@@ -13,7 +13,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center">Messages</h1>
+                <nav>
+                    <ul>
+                        <li><a href="{{ route('messages.index') }}">Messages</a></li>
+                        <li><a href="{{ route('workers.index') }}">Workers</a></li>
+                    </ul>
+                </nav>
+                <h1 class="text-center">Workers</h1>
                 <a class="btn btn-primary" href="{{ route('workers.create') }}">Create</a>
                 <table class="table">
                     <thead>

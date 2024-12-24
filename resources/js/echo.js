@@ -15,6 +15,7 @@ window.Echo = new Echo({
 
 window.Echo.channel('message')
     .listen('MessageEvent', (e) => {
+        
         const messageList = document.getElementById('messages');
 
         const messageItem = document.createElement('div');
@@ -23,10 +24,11 @@ window.Echo.channel('message')
         newMessage.innerText = e.message.message;
         messageItem.appendChild(newMessage);
 
+        const newImage = document.createElement('img');
+        newImage.width = 150;
+        newImage.src = '/storage/' + e.message.image_path;
+
         if (e.message.image_path) {
-            const newImage = document.createElement('img');
-            newImage.src = `/storage/${e.message.image_path}`;
-            newImage.width = 150;
             messageItem.appendChild(newImage);
         }
 
@@ -50,6 +52,54 @@ window.Echo.channel('workers')
             <td>${worker.email}</td>
             <td>${worker.date_of_birth}</td>
         `;
-
         tbody.prepend(newRow);
     });
+
+
+window.Echo.channel('message-count')
+    .listen('CountingMessages', (e) => {
+        // console.log(e.count); // Log the count to verify it's received
+        document.getElementById('message-count-display').textContent = e.messages;
+    });
+
+window.Echo.channel('switch-status')
+    .listen('SwitchTheStatus', (e) => {
+        let dropdownMenu = document.querySelector('.dropdown-menu');
+
+        // Clear existing content
+        dropdownMenu.innerHTML = '';
+
+        // Dynamically add messages
+        e.messages.forEach(message => {
+            let messageHTML = `
+                <a href="/switchMessageStatus/${message.id}" class="dropdown-item">
+                  <!-- Message Start -->
+                  <div class="media">
+                    <img src="${message.image_path}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                    <div class="media-body">
+                      <h3 class="dropdown-item-title">
+                        ${message.title}
+                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                      </h3>
+                      <p class="text-sm">${message.message}</p>
+                      <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> ${message.created_at}</p>
+                    </div>
+                  </div>
+                  <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+            `;
+            dropdownMenu.innerHTML += messageHTML;
+        });
+
+        // Add "See All Messages" at the end
+        dropdownMenu.innerHTML += `
+            <a href="/" class="dropdown-item dropdown-footer">See All Messages</a>
+        `;
+    });
+
+
+window.Echo.channel('all-messages')
+    .listen('GetMessagesEvent', (e) => {
+        console.log(e.messages);
+    })

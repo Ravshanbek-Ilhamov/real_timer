@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center">Create Messages</h1>
+                <h1 class="text-center">Create Worker</h1>
 
                 <form action="{{route('workers.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf

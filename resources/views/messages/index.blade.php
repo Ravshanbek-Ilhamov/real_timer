@@ -14,15 +14,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center">Messages</h1>
-
                 <nav>
                     <ul>
                         <li><a href="{{ route('messages.index') }}">Messages</a></li>
                         <li><a href="{{ route('workers.index') }}">Workers</a></li>
                     </ul>
                 </nav>
-
+                <h1 class="text-center">Messages</h1>
                 <form action="{{route('messages.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">

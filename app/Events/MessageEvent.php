@@ -34,4 +34,15 @@ class MessageEvent implements ShouldBroadcast
             new Channel('message'),
         ];
     }
+
+    // public function broadcastWith(): array
+    // {
+    //     return [
+    //         'message' => [
+    //             'id' => $this->message->id,
+    //             'text' => $this->message->text,
+    //             'image_path' => $this->message->image_path,
+    //         ],
+    //     ];
+    // }
 }

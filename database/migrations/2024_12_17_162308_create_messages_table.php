@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('message');
             $table->text('image_path');
+            $table->string('status')->default('sent');
             $table->timestamps();
         });
     }
